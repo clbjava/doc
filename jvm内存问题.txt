@@ -24,6 +24,26 @@ jps:查看java程序的进程号，找到进程ID，可以通过top -p ID 直接查看进程状态。
 
 jstat：用于输出java程序内存使用情况，包括新生代、老年代、元数据区容量、垃圾回收情况。
 
+gc实时执行情况
+命令参数说明：
+Options，一般使用 -gcutil 或  -gc 查看gc 情况
+pid，当前运行的 java进程号 
+interval，间隔时间，单位为秒或者毫秒 
+count，打印次数，如果缺省则打印无数次
+ 
+Options 参数如下：
+-gc：统计 jdk gc时 heap信息，以使用空间字节数表示
+-gcutil：统计 gc时， heap情况，以使用空间的百分比表示
+-class：统计 class loader行为信息
+-compile：统计编译行为信息
+-gccapacity：统计不同 generations（新生代，老年代，持久代）的 heap容量情况
+-gccause：统计引起 gc的事件
+-gcnew：统计 gc时，新生代的情况
+-gcnewcapacity：统计 gc时，新生代 heap容量
+-gcold：统计 gc时，老年代的情况
+-gcoldcapacity：统计 gc时，老年代 heap容量
+-gcpermcapacity：统计 gc时， permanent区 heap容量
+
 jsta -gcutil PID 2000 20
 说明：上述命令输出进程ID为3618的内存使用情况（每2000毫秒输出一次，一共输出20次）
 S0：幸存1区当前使用比例
