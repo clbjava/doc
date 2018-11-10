@@ -1,0 +1,23 @@
+
+1、到本地项目文件夹右键选择git bash here
+
+2、输入个人信息(代码提交者)
+
+git config --global user.name "clb" 
+
+git config --global user.email 295435732@qq.com 
+
+3、在本地项目目录创建本地仓库
+git init  
+
+输入命令后项目目录会有一个隐藏的.git文件夹
+上传所有代码到本地仓库
+git add .
+
+4、git commit -m "initial commit"
+
+5、上传代码到github
+
+git remote add origin https://github.com/clbjava/doc.git
+
+git push origin master
