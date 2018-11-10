@@ -18,6 +18,9 @@ git add .
 
 5、上传代码到github
 
+
+gg
+
 git remote add origin https://github.com/clbjava/doc.git
 
 git push origin master
