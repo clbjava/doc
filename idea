@@ -1,0 +1,27 @@
+1、去官网下载并安装 idea
+地址：https://www.jetbrains.com/ide...
+
+2、下载破解(crack) jar 包
+地址 http://idea.lanyus.com/jar/Je... 
+
+如果失效，去下面这个网站 http://idea.lanyus.com 自行下载
+
+image
+
+3、下载好了的 crack jar包 放到 idea 的 bin 目录下
+
+4、修改 bin 目录下的 idea.vmoptions 文件
+把 idea.vmoptions 文件加一行如下的配置，根据你保存的文件名自行变更
+
+-javaagent:../bin/JetbrainsCrack-2.7-release-str.jar
+
+有可能版本或者操作系统不同的原因(我的是 Mac)，有人可能没有 idea.vmoptions，但是有
+ idea.exe.vmoptions 和 
+idea64.exe.vmoptions 
+这两个文件，在这里面进行配置应该也是一样。
+
+5、在 hosts 文件里面添加如下配置 C:\Windows\System32\drivers\etc
+0.0.0.0 account.jetbrains.com
+
+6、打开 idea，输入如下激活码
+去这里获取最新的注册码 http://idea.lanyus.com/getkey
