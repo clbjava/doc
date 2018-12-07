@@ -1,77 +1,87 @@
-->�鿴��ǰϵͳ���������cpu���ڴ棩-> �������ڴ�ԭ�򡢻����߳�ԭ�� -> �ڴ�ԭ�����              ->�������
-                                                                                                            ->�߳�ԭ�� ����߳�ջ
+成员变量、本地（局部）变量、类成员变量
+
+成员变量、类成员变量->存储在堆
+
+本地（局部）变量：方法参数、方法体里面定义的变量->存储在栈
+
+
+1、局部变量表内容越多，栈帧越大，栈深度越小。
+2、栈帧：栈调用过程中存储的调用记录。->同样栈大小，执行过程中栈栈越大，栈深度就越小。
+
+
+->查看当前系统运行情况（cpu、内存）-> 分析是内存原因、还是线程原因 -> 内存原因检查堆 ->解决问题->线程原因 检查线程栈
 
 
 
 linux:
-uptime :�������ʾĿǰ�������������е�ʱ�䣬�Լ����������
+uptime :该命令将显示目前服务器持续运行的时间，以及负载情况。
 
-top:�鿴��ǰϵͳ��CPU/�ڴ��Լ���صĽ���״̬
+top:查看当前系统的CPU/内存以及相关的进程状态
 
-vmstat�����Բ鿴ϵͳCPU/�ڴ桢swap��io�����
+vmstat：可以查看系统CPU/内存、swap、io等情况
 
 vmstat 1 4
-���������ÿ��1�����һ�Σ�һ�������ĴΡ�CPUռ���ʺܸߣ�
-�������л�Ƶ����˵��ϵͳ���߳�����Ƶ���л������������ĳ������˴������̴߳�����Դ�����������
-����swapҲ��ֵ�ù�ע��ָ�꣬���swpd���������ϵͳ��ʹ�õ������ڴ治�㣬���ò�ʹ�ý������ڴ棬
-����һ���������ĳЩ��������ʹ��swap������swap������������ڴ滹�кܶ���࣬��Щ�������Ҫע��ġ�
+上面的命令每隔1秒采样一次，一共采样四次。CPU占用率很高，
+上下文切换频繁，说明系统有线程正在频繁切换，这可能是你的程序开启了大量的线程存在资源竞争的情况。
+另外swap也是值得关注的指标，如果swpd过高则可能系统能使用的物理内存不足，不得不使用交换区内存，
+还有一个例外就是某些程序优先使用swap，导致swap飙升，而物理内存还有很多空余，这些情况是需要注意的。
 
 
 
-JDK�Դ����õĹ��ߣ�jps��jstat��jmap��jstack��
+JDK自带有用的工具：jps、jstat、jmap、jstack。
 
-jps:�鿴java����Ľ��̺ţ��ҵ�����ID������ͨ��top -p ID ֱ�Ӳ鿴����״̬��
+jps:查看java程序的进程号，找到进程ID，可以通过top -p ID 直接查看进程状态。
 
-jstat���������java�����ڴ�ʹ��������������������������Ԫ�������������������������
+jstat：用于输出java程序内存使用情况，包括新生代、老年代、元数据区容量、垃圾回收情况。
 
-gcʵʱִ�����
-�������˵����
-Options��һ��ʹ�� -gcutil ��  -gc �鿴gc ���
-pid����ǰ���е� java���̺� 
-interval�����ʱ�䣬��λΪ����ߺ��� 
-count����ӡ���������ȱʡ���ӡ������
+gc实时执行情况
+命令参数说明：
+Options，一般使用 -gcutil 或  -gc 查看gc 情况
+pid，当前运行的 java进程号 
+interval，间隔时间，单位为秒或者毫秒 
+count，打印次数，如果缺省则打印无数次
  
-Options �������£�
--gc��ͳ�� jdk gcʱ heap��Ϣ����ʹ�ÿռ��ֽ�����ʾ
--gcutil��ͳ�� gcʱ�� heap�������ʹ�ÿռ�İٷֱȱ�ʾ
--class��ͳ�� class loader��Ϊ��Ϣ
--compile��ͳ�Ʊ�����Ϊ��Ϣ
--gccapacity��ͳ�Ʋ�ͬ generations������������������־ô����� heap�������
--gccause��ͳ������ gc���¼�
--gcnew��ͳ�� gcʱ�������������
--gcnewcapacity��ͳ�� gcʱ�������� heap����
--gcold��ͳ�� gcʱ������������
--gcoldcapacity��ͳ�� gcʱ������� heap����
--gcpermcapacity��ͳ�� gcʱ�� permanent�� heap����
+Options 参数如下：
+-gc：统计 jdk gc时 heap信息，以使用空间字节数表示
+-gcutil：统计 gc时， heap情况，以使用空间的百分比表示
+-class：统计 class loader行为信息
+-compile：统计编译行为信息
+-gccapacity：统计不同 generations（新生代，老年代，持久代）的 heap容量情况
+-gccause：统计引起 gc的事件
+-gcnew：统计 gc时，新生代的情况
+-gcnewcapacity：统计 gc时，新生代 heap容量
+-gcold：统计 gc时，老年代的情况
+-gcoldcapacity：统计 gc时，老年代 heap容量
+-gcpermcapacity：统计 gc时， permanent区 heap容量
 
 jsta -gcutil PID 2000 20
-˵�������������������IDΪ3618���ڴ�ʹ�������ÿ2000�������һ�Σ�һ�����20�Σ�
-S0���Ҵ�1����ǰʹ�ñ���
-S1���Ҵ�2����ǰʹ�ñ���
-E������԰��ʹ�ñ���
-O�������ʹ�ñ���
-M��Ԫ������ʹ�ñ���
-CCS��ѹ��ʹ�ñ���
-YGC��������������մ���
-FGC��������������մ���
-FGCT�������������������ʱ��
-GCT����������������ʱ��
+说明：上述命令输出进程ID为3618的内存使用情况（每2000毫秒输出一次，一共输出20次）
+S0：幸存1区当前使用比例
+S1：幸存2区当前使用比例
+E：伊甸园区使用比例
+O：老年代使用比例
+M：元数据区使用比例
+CCS：压缩使用比例
+YGC：年轻代垃圾回收次数
+FGC：老年代垃圾回收次数
+FGCT：老年代垃圾回收消耗时间
+GCT：垃圾回收消耗总时间
 
-jmap���������java�������ڴ������������������Щ���󣬶����������
+jmap：用于输出java程序中内存对象的情况，包括有哪些对象，对象的数量。
 
 jmap -histo 3618
-���������ӡ������IDΪ3618���ڴ�����������ǳ��õķ�ʽ�ǽ�ָ�����̵��ڴ�heap������ⲿ�ļ���
-����ר�ŵ�heap�������߽��з���,����mat��Memory Analysis Tool�����������ǳ��õ������ǣ�
+上述命令打印出进程ID为3618的内存情况。但我们常用的方式是将指定进程的内存heap输出到外部文件，
+再由专门的heap分析工具进行分析,例如mat（Memory Analysis Tool），所以我们常用的命令是：
 
 jmap -dump:live,format=b,file=heap.hprof 3618
-��heap.hprof���������window������ʹ��mat���߷���
+将heap.hprof传输出来到window电脑上使用mat工具分析
 
-jstack���û����java�����߳�ջ������������ڶ�λ��ΪĳЩ�߳�������ɵĹ��ϻ��������⡣
+jstack：用户输出java程序线程栈的情况，常用于定位因为某些线程问题造成的故障或性能问题。
 
 jstack 3618 > jstack.out
-�����������IDΪ3618��ջ��Ϣ������ⲿ�ļ������ڴ��䵽windows�����Ͻ��з�����
+上述命令将进程ID为3618的栈信息输出到外部文件，便于传输到windows电脑上进行分析。
 
-�Դ����ͼ�ν���
+自带监控图形界面
 Jconsole 
 Jvisualvm  
 
