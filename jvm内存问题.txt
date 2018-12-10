@@ -90,6 +90,26 @@ start-> new ->runable->runing->blocked->dead
 
 
 
+2018-12-10 Linux:
+
+1、命令查看CPU、内存等使用情况：top
+
+2、命令查看进程的线程情况：ps -mp pid -o THREAD,tid,time
+
+3、命令将线程id转换为16进制：printf "%x\n" 6766（tid）
+
+4、命令查看线程堆栈信息GC:jstack pid |grep tid
+
+5、命令jstat查看进程内存状况：jstat -gcutil
+
+6、命令jstack 和 jmap 分析进程堆栈和内存状况：
+   （1）、命令: jmap [option] vmid 
+   jmap -dump:format=b,file=dump.bin 6764
+   （2）、命令: jstack [option] vmid 
+   jstack -l 6764 >> jstack.out
+
+
+
 
 
 
