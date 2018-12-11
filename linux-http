@@ -40,9 +40,5 @@ Http请求指的是客户端向服务器的请求消息，Http请求主要分为
 
      示例：目标url:http://fsc-inner.99bill.com/acs/deposit/{srcRef}
 
-     命令：curl -H "Content-type: application/json" -X POST -d '{"srcRef":"1002"}'http://fsc-inner.99bill.com/acs/deposit/1002
---------------------- 
-作者：cyl937 
-来源：CSDN 
-原文：https://blog.csdn.net/cyl937/article/details/52850304 
-版权声明：本文为博主原创文章，转载请附上博文链接！
+     命令：curl -H "Content-type: application/json" -X POST -d '{"srcRef":"1002"}' http://fsc-inner.99bill.com/acs/deposit/1002
+      走代理 -x 代理IP：端口
