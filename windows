@@ -1,2 +1,8 @@
 打开服务命令 services.msc
 删除服务命令 sc delete "服务名称"
+
+磁盘100%
+要对Windows Defender进行相关的设置，具体的步骤如下：
+1、win + R 快捷键调出“运行”对话框，输入“gpedit.msc”，回车或者点击确定。
+2、打开“本地组策略编辑器”后，依次在左侧导航窗格中进入“计算机配置 - 管理模板 - Windows组件 - Windows Defender防病毒程序 - 扫描”。
+
