@@ -29,3 +29,6 @@ Method method=handermethod.getMethod();
         super.addInterceptors(registry);
     }
  }
+
+二、浏览器 cookies 问题
+  后台写cookies，需要注意与自己的域名相对应，不同浏览器规则不一样，可以允许cookies名称一致，会出现cookies共享，导致获取cookies时，内容出错。
