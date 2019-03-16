@@ -21,5 +21,36 @@ http://blog.51yip.com/mysql/1029.html
 (2)、对数据一致性要求不高，如在线人数和session等应用。
 (3)、需要定期归档数据。
 
+=====================================sql 优化==================================================
+
+-- 1、表设计是否合理，有没有遵循选取数据类型越简单越小原则。
+-- 2、表里的碎片是否整理。
+-- 3、表的统计信息是否收集（只有统计信息收集准确，执行计划才可以帮助我们优化SQL）。
+-- 4、查看执行计划，检查索引使用情况，没有用到索引，优先考虑创建索引（创建索引原则：
+-- 1、经常被查询的列。2、经常用于表连接的列。3、经常排序分组的列等）。
+ 
+-- 查看表碎片
+show table status like  "%pmbank_ams_unity_acct_info%";
+
+-- 整理表碎片
+alter table pmbank_ams_unity_acct_info engine=INNODB;
+-- 备份表，创建新表，将备份表数据导入到新表
+
+-- 查看数据库统计信息
+select * from information_schema.tables where table_schema="db" group by table_name;
+
+select table_name,(sum(data_length+index_length)/1024/1024) capacity
+from information_schema.tables where table_schema="db" group by table_name;
+
+show full processlist;
+
 =======================================================================================
+
+
+
+
+
+
+
+
 
