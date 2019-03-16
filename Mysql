@@ -44,10 +44,69 @@ from information_schema.tables where table_schema="db" group by table_name;
 
 show full processlist;
 
+================================表分区=======================================================
+CREATE TABLE pmbank_ams_unity_acct_info (
+app_id VARCHAR ( 32 ) NOT NULL COMMENT '小程序appid',
+union_id VARCHAR ( 32 ) NOT NULL,
+dcn_no VARCHAR ( 10 ) DEFAULT NULL COMMENT 'dcn',
+ecif_no VARCHAR ( 20 ) DEFAULT NULL COMMENT '客户号',
+open_id VARCHAR ( 128 ) DEFAULT NULL COMMENT 'openId',
+personal_name VARCHAR ( 50 ) DEFAULT NULL COMMENT '客户姓名',
+personal_identify_type VARCHAR ( 2 ) DEFAULT '01' COMMENT '证件类型:01-身份证',
+personal_identify_number VARCHAR ( 20 ) DEFAULT NULL COMMENT '证件号码',
+STATUS VARCHAR ( 2 ) DEFAULT '00' COMMENT '账户状态：00-初始 01-认证成功',
+create_time datetime DEFAULT NULL COMMENT '创建时间',
+update_time TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+remark1 VARCHAR ( 50 ) DEFAULT NULL COMMENT '备注1',
+remark2 VARCHAR ( 50 ) DEFAULT NULL COMMENT '备注2',
+remark3 VARCHAR ( 50 ) DEFAULT NULL COMMENT '备注3',
+remark4 VARCHAR ( 256 ) DEFAULT NULL COMMENT '备注4',
+PRIMARY KEY ( app_id, union_id, create_time ),
+KEY create_time ( create_time ) 
+)
+ENGINE=INNODB DEFAULT CHARSET=utf8 COMMENT='统一账户信息表' 
+PARTITION BY RANGE COLUMNS(create_time) (
+PARTITION p20190101 VALUES less than ('2019-01-01'),
+PARTITION p20190201 VALUES less than ('2019-02-01'),
+PARTITION p20190301 VALUES less than ('2019-03-01'),
+PARTITION p20190401 VALUES less than ('2019-04-01'),
+PARTITION p20190501 VALUES less than ('2019-05-01'),
+PARTITION p20190601 VALUES less than ('2019-06-01'),
+PARTITION p20190701 VALUES less than ('2019-07-01'),
+PARTITION p20190801 VALUES less than ('2019-08-01'),
+PARTITION p20190901 VALUES less than ('2019-09-01'),
+PARTITION p20191001 VALUES less than ('2019-10-01'),
+PARTITION p20191101 VALUES less than ('2019-11-01'),
+PARTITION p20191201 VALUES less than ('2019-12-01'),
+PARTITION p20200101 VALUES less than ('2020-01-01'),
+PARTITION p20200201 VALUES less than ('2020-02-01'),
+PARTITION p20200301 VALUES less than ('2020-03-01'),
+PARTITION p20200401 VALUES less than ('2020-04-01'),
+PARTITION p20200501 VALUES less than ('2020-05-01'),
+PARTITION p20200601 VALUES less than ('2020-06-01'),
+PARTITION p20200701 VALUES less than ('2020-07-01'),
+PARTITION p20200801 VALUES less than ('2020-08-01'),
+PARTITION p20200901 VALUES less than ('2020-09-01'),
+PARTITION p20201001 VALUES less than ('2020-10-01'),
+PARTITION p20201101 VALUES less than ('2020-11-01'),
+PARTITION p20201201 VALUES less than ('2020-12-01'),
+PARTITION p25 VALUES less than MAXVALUE);
+
+--查看各个分区数据情况
+SELECT
+	partition_name,
+	table_rows 
+FROM
+	information_schema.PARTITIONS 
+WHERE
+	table_name = 'pmbank_ams_unity_acct_info';
+ 
+ EXPLAIN PARTITIONS SELECT
+	count( * ) 
+FROM
+	pmbank_ams_unity_acct_info;
+
 =======================================================================================
-
-
-
 
 
 
