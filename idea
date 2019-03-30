@@ -25,3 +25,7 @@ idea64.exe.vmoptions
 
 6、打开 idea，输入如下激活码
 去这里获取最新的注册码 http://idea.lanyus.com/getkey
+
+
+mvn -v
+mvn help:system
