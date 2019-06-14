@@ -146,9 +146,9 @@ start-> new ->runable->runing->blocked->dead
 
 3、命令将线程id转换为16进制：printf "%x\n" 6766（tid）
 
-4、命令查看线程堆栈信息GC:jstack pid |grep tid ((jstack $pid|grep $tid -A 30))
+4、命令查看线程堆栈信息GC:jstat -gcutil
 
-5、命令jstat查看进程内存状况：jstat -gcutil
+5、命令jstat查看进程内存状况： jstack pid |grep tid ((jstack $pid|grep $tid -A 30))
 
 6、命令jstack 和 jmap 分析进程堆栈和内存状况：
    （1）、命令: jmap [option] vmid 
